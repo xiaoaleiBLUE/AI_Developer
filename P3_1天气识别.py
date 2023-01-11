@@ -72,7 +72,6 @@ test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 imgs, labels = next(iter(train_dataloader))
 print(imgs.shape)                                          # torch.Size([32, 3, 224, 224])
-
 id_to_class = dict((v, k) for k, v in train_dataset.class_to_idx.items())
 print(id_to_class)                                         # {0: 'cloudy', 1: 'rain', 2: 'shine', 3: 'sunrise'}
 print(id_to_class[1])
@@ -91,7 +90,6 @@ def printlog(info):
     nowtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print("\n"+"========="*8 + '%s'%nowtime)
     print(str(info)+"\n")
-
 
 
 class Net(nn.Module):
