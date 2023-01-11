@@ -29,6 +29,9 @@ transform = transforms.Compose([
 total_data = torchvision.datasets.ImageFolder(total_dir, transform)
 print(total_data)
 print(len(total_data))                                   # 1125
+print(total_data.class_to_idx)
+idx_to_class = dict((v, k) for k, v in total_data.class_to_idx.items())
+print(idx_to_class)
 
 train_size = int(len(total_data) * 0.8)
 test_size = len(total_data) - train_size
@@ -38,6 +41,15 @@ train_dataset, test_dataset = torch.utils.data.random_split(total_data, [train_s
 train_dataloader = DataLoader(train_dataset, batch_size=32)
 test_dataloader = DataLoader(test_dataset, batch_size=32)
 
+img_batch, label_batch = next(iter(train_dataloader))
+plt.figure(figsize=(12, 8))
+for i, (img, label) in enumerate(zip(img_batch[:6], label_batch[:6])):
+    img = img.permute(1, 2, 0).numpy()
+    img = (img + 1) / 2
+    plt.subplot(2, 3, i+1)
+    plt.title(idx_to_class[label.item()])
+    plt.imshow(img)
+plt.show()
 
 def printlog(info):
     nowtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
